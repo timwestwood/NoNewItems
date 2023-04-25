@@ -7,13 +7,13 @@ import net.runelite.client.config.ConfigItem;
 @ConfigGroup("example")
 public interface ExampleConfig extends Config
 {
+
 	@ConfigItem(
-		keyName = "greeting",
-		name = "Welcome Greeting",
-		description = "The message to show to the user when they login"
+			position = 1,
+			keyName = "hide_name",
+			name = "Hide names?",
+			description = "Should the names of hidden items be replaced with 'Non-07 Item'?"
 	)
-	default String greeting()
-	{
-		return "Hello";
-	}
+	default boolean hide_name() { return true; }
+
 }
