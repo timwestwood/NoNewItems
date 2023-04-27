@@ -2,6 +2,7 @@ package com.NoNewItems;
 
 import com.google.inject.Provides;
 import javax.inject.Inject;
+
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.PostItemComposition;
@@ -12,9 +13,9 @@ import net.runelite.client.plugins.PluginDescriptor;
 
 @Slf4j
 @PluginDescriptor(
-		name = "07 Items Only",
+		name = "No New Items",
 		description = "Avoid using items that were not originally part of Old School RuneScape.",
-		tags = {"07", "07 only", "no updates", "no changes", "items"},
+		tags = {"07", "07 only", "no updates", "no changes", "items", "no new items"},
 		loadWhenOutdated = true,
 		enabledByDefault = false
 )
@@ -26,43 +27,67 @@ public class NoNewItemsPlugin extends Plugin
 	@Inject
 	private NoNewItemsConfig config;
 
+	public short[] all_colours = new short[65536];
+	public short[] new_colours = new short[65536];
+
+	public short[] all_textures = new short[94]; // Seemingly there are only 94 textures.
+	public short[] new_textures = new short[94];
+
 	@Override
-	protected void startUp() throws Exception
-	{
-		log.info("07 items only started!");
+	protected void startUp() throws Exception {
+
+		log.info("No New Items started!");
+
+		// Colours in game are represented by a short, which is obtained from an HSL by means of JagexColor.packHSL(int hue, int saturation, int luminance).
+		// Each of these three ints presumably have a minimum value of 0, and they have respective maximums 63, 7 and 127 (see the constant field values in JagexColor).
+		// So it requires 64*128*8 = 65536 values to represent all colours (which is precisely how many different values a short can represent), which will be the
+		// short-represented integers -32768 to 32767. Note that we can simply try to store positive values and those above 32767 will be wrapped to the appropriate
+		// negative value for us.
+		for (int i = 0; i < 65536; i++){
+
+			all_colours[i] = (short) i;
+			new_colours[i] = JagexColor.packHSL(0, 7, 51); // Red
+
+		}
+
+		for (int i = 0; i < 94; i++){
+
+			all_textures[i] = (short) i;
+			new_textures[i] = (short) 56; // Red and pink lava. I think this is the best texture match I can get.
+
+		}
+
 	}
 
 	@Override
-	protected void shutDown() throws Exception
-	{
-		log.info("07 items only stopped!");
+	protected void shutDown() throws Exception {
+		log.info("No New Items stopped!");
 	}
 
-	public void hide_inv_sprite(ItemComposition new_item){
+	public void hide_appearance(ItemComposition new_item){
 
-		new_item.setInventoryModel(7669); // The bank filler sprite.
+		new_item.setColorToReplace(all_colours);
+		new_item.setColorToReplaceWith(new_colours);
 
-		new_item.setXan2d(512);
-		new_item.setYan2d(0);
-		new_item.setZan2d(0);
+		new_item.setTextureToReplace(all_textures);
+		new_item.setTextureToReplaceWith(new_textures);
 
 	}
 
 	public void hide_item(ItemComposition new_item){
 
-		hide_inv_sprite(new_item);
+		hide_appearance(new_item);
 
 		if (config.hide_name()){
 
-			new_item.setName("Non-07 Item");
+			new_item.setName(config.new_name());
 
 		}
 
 	}
 
 	@Subscribe
-	public void onPostItemComposition(PostItemComposition item_change)
-	{
+	public void onPostItemComposition(PostItemComposition item_change) {
 		ItemComposition new_item = item_change.getItemComposition();
 		int id = new_item.getId();
 
@@ -88,6 +113,8 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
+			// TODO: Coin pouches
+
 			hide_item(new_item);
 
 		}
@@ -95,8 +122,7 @@ public class NoNewItemsPlugin extends Plugin
 	}
 
 	@Provides
-	NoNewItemsConfig provideConfig(ConfigManager configManager)
-	{
+	NoNewItemsConfig provideConfig(ConfigManager configManager) {
 		return configManager.getConfig(NoNewItemsConfig.class);
 	}
 }

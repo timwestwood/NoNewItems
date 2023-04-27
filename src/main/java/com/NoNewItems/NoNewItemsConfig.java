@@ -5,13 +5,15 @@ import net.runelite.client.config.ConfigGroup;
 import net.runelite.client.config.ConfigItem;
 import net.runelite.client.config.ConfigSection;
 
-@ConfigGroup("07-items-only")
+import java.awt.*;
+
+@ConfigGroup("No New Items")
 public interface NoNewItemsConfig extends Config
 {
 
 	@ConfigSection(
 			name = "General",
-			description = "General settings for forbidden items.",
+			description = "General settings for new items.",
 			position = 0
 	)
 	String general_section = "General";
@@ -19,11 +21,23 @@ public interface NoNewItemsConfig extends Config
 	@ConfigItem(
 			position = 1,
 			keyName = "hide_name",
-			name = "Hide names",
-			description = "If enabled, the names of forbidden items will be replaced with 'Non-07 Item'.",
+			name = "Replace names",
+			description = "If enabled, the names of new items will be replaced.",
 			section = general_section
 	)
 	default boolean hide_name() { return true; }
+
+	@ConfigItem(
+			position = 2,
+			keyName = "new_name",
+			name = "Replacement name",
+			description = "The name that will be displayed in-game for new items if 'Replace names' is enabled.",
+			section = general_section
+	)
+	default String new_name() { return "NEW ITEM"; }
+
+
+
 
 
 	@ConfigSection(
@@ -37,7 +51,7 @@ public interface NoNewItemsConfig extends Config
 			position = 1,
 			keyName = "hide_god_wars",
 			name = "Hide God Wars dungeon items",
-			description = "If enabled, all items from the God Wars dungeon (i.e. even those which were added to the main game in 2007 but weren't included in the initial OSRS launch) will be considered forbidden.",
+			description = "If enabled, all items from the God Wars dungeon (i.e. even those which were added to the main game in 2007 but weren't included in the initial OSRS launch) will be considered new.",
 			section = update_section
 	)
 	default boolean hide_god_wars() { return true; }
@@ -46,7 +60,7 @@ public interface NoNewItemsConfig extends Config
 			position = 2,
 			keyName = "hide_varrock_armour",
 			name = "Hide Varrock armour 1",
-			description = "If enabled, the Varrock armour 1 will be considered forbidden, despite the Varrock diary having originally been released in 2007 and the easy diary requiring no new content.",
+			description = "If enabled, the Varrock armour 1 will be considered new, despite the Varrock diary having originally been released in 2007 and the easy diary requiring no new content.",
 			section = update_section
 	)
 	default boolean hide_varrock_armour() { return true; }
