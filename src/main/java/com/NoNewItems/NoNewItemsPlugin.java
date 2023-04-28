@@ -113,7 +113,14 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
-			// TODO: Coin pouches
+			if (!config.hide_coin_pouches()){
+
+				// If we enter here, we're allowing coin pouches from pickpocketing.
+				if ((id == 24703) || ((id >= 22521) && (id <= 22538))){
+					return; // Leave without hiding the item.
+				}
+
+			}
 
 			hide_item(new_item);
 

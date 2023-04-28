@@ -65,4 +65,13 @@ public interface NoNewItemsConfig extends Config
 	)
 	default boolean hide_varrock_armour() { return true; }
 
+	@ConfigItem(
+			position = 3,
+			keyName = "hide_coin_pouches",
+			name = "Hide coin pouches",
+			description = "If enabled, coin pouches from pickpocketing will be considered new.",
+			section = update_section
+	)
+	default boolean hide_coin_pouches() { return true; }
+
 }
