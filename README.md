@@ -21,6 +21,11 @@ By default, the plugin will consider items from the original God Wars dungeon an
 
 ![new_item_renamed_for_readme](https://user-images.githubusercontent.com/30214370/235101000-b7bbcb02-d018-4cb0-b9fb-dae80d96a59d.png)
 
+- A new item on the floor.
+
+![new_item_floor_pile_for_readme](https://user-images.githubusercontent.com/30214370/235109456-cea696bf-4e06-4b6b-9dd4-b00e241bace0.png)
+
+
 - Some game items, such as fishing nets, are drawn using texture files rather than being coloured in. For these items, the usual texture is replaced with red and pink lava to give a similar effect.
 
 ![new_item_textured_for_readme](https://user-images.githubusercontent.com/30214370/235101805-8086a8f6-c4b5-4acc-b630-71d1384d340b.png)
