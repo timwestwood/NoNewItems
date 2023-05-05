@@ -17,7 +17,7 @@ import net.runelite.client.plugins.PluginDescriptor;
 		description = "Avoid using items that were not originally part of Old School RuneScape.",
 		tags = {"07", "07 only", "no updates", "no changes", "items", "no new items"},
 		loadWhenOutdated = true,
-		enabledByDefault = false
+		enabledByDefault = true
 )
 public class NoNewItemsPlugin extends Plugin
 {
