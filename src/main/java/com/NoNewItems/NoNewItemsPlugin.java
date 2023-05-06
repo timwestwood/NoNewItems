@@ -8,6 +8,7 @@ import net.runelite.api.*;
 import net.runelite.api.events.PostItemComposition;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
+import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
@@ -33,6 +34,37 @@ public class NoNewItemsPlugin extends Plugin
 	public short[] all_textures = new short[94]; // Seemingly there are only 94 textures.
 	public short[] new_textures = new short[94];
 
+	public void reset(){
+
+		// Resetting these caches will force through the visual change in inventories
+		// (including shops, worn equipment etc.) and on the floor. Unfortunately it doesn't
+		// change the name shown by the Ground Items plugin.
+		NodeCache cache = client.getItemModelCache();
+		cache.reset();
+
+		cache = client.getItemSpriteCache();
+		cache.reset();
+
+		cache = client.getItemCompositionCache();
+		cache.reset();
+
+		// This will force through appearance changes on the player model.
+		Player me = client.getLocalPlayer();
+		if (me != null){
+			(me.getPlayerComposition()).setHash();
+		}
+
+		// This should force through the change on all other rendered players.
+		// However, certain players seem to get stuck on the start-up configuration of the plugin.
+		Player[] cached_players = client.getCachedPlayers();
+		for (Player other : cached_players){
+			if (other != null){
+				(other.getPlayerComposition()).setHash();
+			}
+		}
+
+	}
+
 	@Override
 	protected void startUp() throws Exception {
 
@@ -57,11 +89,27 @@ public class NoNewItemsPlugin extends Plugin
 
 		}
 
+		reset();
+
 	}
 
 	@Override
 	protected void shutDown() throws Exception {
+
 		log.info("No New Items stopped!");
+
+		reset();
+
+	}
+
+	@Subscribe
+	public void onConfigChanged(ConfigChanged change)
+	{
+		if (change.getGroup().equals("NoNewItems")){
+
+			reset();
+
+		}
 	}
 
 	public void hide_appearance(ItemComposition new_item){
