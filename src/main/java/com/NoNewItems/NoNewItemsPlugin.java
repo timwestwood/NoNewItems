@@ -6,6 +6,7 @@ import javax.inject.Inject;
 import lombok.extern.slf4j.Slf4j;
 import net.runelite.api.*;
 import net.runelite.api.events.PostItemComposition;
+import net.runelite.client.callback.ClientThread;
 import net.runelite.client.config.ConfigManager;
 import net.runelite.client.eventbus.Subscribe;
 import net.runelite.client.events.ConfigChanged;
@@ -28,16 +29,23 @@ public class NoNewItemsPlugin extends Plugin
 	@Inject
 	private NoNewItemsConfig config;
 
+	@Inject
+	private ClientThread clientThread;
+
 	public short[] all_colours = new short[65536];
 	public short[] new_colours = new short[65536];
 
 	public short[] all_textures = new short[94]; // Seemingly there are only 94 textures.
 	public short[] new_textures = new short[94];
 
-	public void reset(){
+	public void reset(boolean show_reset_message){
+
+		if (show_reset_message){
+			clientThread.invokeLater(this::reset_message);
+		}
 
 		// Resetting these caches will force through the visual change in inventories
-		// (including shops, worn equipment etc.) and on the floor. Unfortunately it doesn't
+		// (including shops, worn equipment etc.), in the GE and on the floor. Unfortunately it doesn't
 		// change the name shown by the Ground Items plugin.
 		NodeCache cache = client.getItemModelCache();
 		cache.reset();
@@ -55,7 +63,7 @@ public class NoNewItemsPlugin extends Plugin
 		}
 
 		// This should force through the change on all other rendered players.
-		// However, certain players seem to get stuck on the start-up configuration of the plugin.
+		// However, certain players seem to get stuck on the configuration of the plugin when they were 'discovered'.
 		Player[] cached_players = client.getCachedPlayers();
 		for (Player other : cached_players){
 			if (other != null){
@@ -63,6 +71,12 @@ public class NoNewItemsPlugin extends Plugin
 			}
 		}
 
+	}
+
+	public void reset_message(){
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "\n", null);
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "\nNo New Items Plugin: Please note that you may need to log out and back in for visual changes to some other players to fully take effect.\n", null);
+		client.addChatMessage(ChatMessageType.GAMEMESSAGE, "", "\n", null);
 	}
 
 	@Override
@@ -89,7 +103,7 @@ public class NoNewItemsPlugin extends Plugin
 
 		}
 
-		reset();
+		reset(true);
 
 	}
 
@@ -98,16 +112,17 @@ public class NoNewItemsPlugin extends Plugin
 
 		log.info("No New Items stopped!");
 
-		reset();
+		reset(true);
 
 	}
 
 	@Subscribe
-	public void onConfigChanged(ConfigChanged change)
-	{
+	public void onConfigChanged(ConfigChanged change) {
 		if (change.getGroup().equals("NoNewItems")){
 
-			reset();
+			boolean changes_player_visual = !(change.getKey().equals("hide_name") || change.getKey().equals("new_name") || change.getKey().equals("hide_coin_pouches"));
+
+			reset(changes_player_visual);
 
 		}
 	}
@@ -135,7 +150,8 @@ public class NoNewItemsPlugin extends Plugin
 	}
 
 	@Subscribe
-	public void onPostItemComposition(PostItemComposition item_change) {
+	public void onPostItemComposition(PostItemComposition item_change){
+
 		ItemComposition new_item = item_change.getItemComposition();
 		int id = new_item.getId();
 
@@ -177,7 +193,7 @@ public class NoNewItemsPlugin extends Plugin
 	}
 
 	@Provides
-	NoNewItemsConfig provideConfig(ConfigManager configManager) {
+	NoNewItemsConfig provideConfig(ConfigManager configManager){
 		return configManager.getConfig(NoNewItemsConfig.class);
 	}
 }
