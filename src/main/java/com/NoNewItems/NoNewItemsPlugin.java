@@ -185,6 +185,28 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
+			if (!config.hide_bonds()){
+
+				// If we enter here, we're allowing bonds for buying membership etc.
+				boolean is_a_bond = (id == 13190) || (id == 13191) || (id == 13192) || (id == 15430) || (id == 15431);
+
+				if (is_a_bond){
+					return; // Leave without hiding the item.
+				}
+
+			}
+
+			if (!config.hide_reward_caskets()){
+
+				// If we enter here, we're allowing the new reward caskets from permitted tiers of clue.
+				boolean is_a_valid_clue_reward = (id == 20544) || (id == 20545) || (id == 20546);
+
+				if (is_a_valid_clue_reward){
+					return; // Leave without hiding the item.
+				}
+
+			}
+
 			hide_item(new_item);
 
 		}

@@ -40,7 +40,7 @@ public interface NoNewItemsConfig extends Config
 
 	@ConfigSection(
 			name = "Game Updates",
-			description = "Settings concerning updates to the game which reintroduced content from 2007 that wasn't included in the backup used to create OSRS.",
+			description = "Settings concerning items that were not present in the backup used to create OSRS.",
 			position = 1
 	)
 	String update_section = "Game Updates";
@@ -71,5 +71,23 @@ public interface NoNewItemsConfig extends Config
 			section = update_section
 	)
 	default boolean hide_coin_pouches() { return true; }
+
+	@ConfigItem(
+			position = 4,
+			keyName = "hide_bonds",
+			name = "Hide bonds",
+			description = "If enabled, Old School bonds will be considered new.",
+			section = update_section
+	)
+	default boolean hide_bonds() { return true; }
+
+	@ConfigItem(
+			position = 5,
+			keyName = "hide_reward_caskets",
+			name = "Hide reward caskets",
+			description = "If enabled, reward caskets from easy, medium and hard clues will be considered new.",
+			section = update_section
+	)
+	default boolean hide_reward_caskets() { return true; }
 
 }
