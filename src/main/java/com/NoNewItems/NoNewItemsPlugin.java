@@ -119,7 +119,7 @@ public class NoNewItemsPlugin extends Plugin
 	public void onConfigChanged(ConfigChanged change) {
 		if (change.getGroup().equals("NoNewItems")){
 
-			boolean changes_player_visual = !(change.getKey().equals("hide_name") || change.getKey().equals("new_name") || change.getKey().equals("hide_coin_pouches"));
+			boolean changes_player_visual = change.getKey().equals("hide_god_wars") || change.getKey().equals("hide_varrock_armour");
 
 			reset(changes_player_visual);
 
