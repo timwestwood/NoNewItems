@@ -148,11 +148,7 @@ public class NoNewItemsPlugin extends Plugin
 
 	}
 
-	@Subscribe
-	public void onPostItemComposition(PostItemComposition item_change){
-
-		ItemComposition new_item = item_change.getItemComposition();
-		int id = new_item.getId();
+	public boolean is_a_new_item(int id){
 
 		if (id > 11685){ // This seems to be the item ID cutoff from King's Ransom to the Nightmare Zone according to https://www.osrsbox.com/tools/item-search/.
 
@@ -162,7 +158,7 @@ public class NoNewItemsPlugin extends Plugin
 				boolean valid_god_wars_item = ((id >= 11787) && (id < 11791)) || ((id >= 11793) && (id < 11844)); // These checks exclude the Armadyl crossbow (11785/6) and the Staff of the dead (11791/2).
 
 				if (valid_god_wars_item){
-					return; // Leave without hiding the item.
+					return false;
 				}
 
 			}
@@ -171,7 +167,7 @@ public class NoNewItemsPlugin extends Plugin
 
 				// If we enter here, then we are allowing the Varrock armour 1 from the easy Varrock diary.
 				if ((id == 13104) || (id == 18642)){
-					return; // Leave without hiding the item.
+					return false;
 				}
 
 			}
@@ -180,7 +176,7 @@ public class NoNewItemsPlugin extends Plugin
 
 				// If we enter here, we're allowing coin pouches from pickpocketing.
 				if ((id == 24703) || ((id >= 22521) && (id <= 22538))){
-					return; // Leave without hiding the item.
+					return false;
 				}
 
 			}
@@ -191,7 +187,7 @@ public class NoNewItemsPlugin extends Plugin
 				boolean is_a_bond = (id == 13190) || (id == 13191) || (id == 13192) || (id == 15430) || (id == 15431);
 
 				if (is_a_bond){
-					return; // Leave without hiding the item.
+					return false;
 				}
 
 			}
@@ -202,13 +198,58 @@ public class NoNewItemsPlugin extends Plugin
 				boolean is_a_valid_clue_reward = (id == 20544) || (id == 20545) || (id == 20546);
 
 				if (is_a_valid_clue_reward){
-					return; // Leave without hiding the item.
+					return false;
 				}
 
 			}
 
-			hide_item(new_item);
+			return true;
 
+		} else {
+
+			// If we enter here, we're looking for new items which have been inserted at lower item IDs.
+
+			if ((id == 3066) || (id == 3068) || (id == 3070) || (id == 3072)){ // Bronze javelin heads
+				return true;
+			}
+			if ((id == 3074) || (id == 3076) || (id == 3078) || (id == 3082)){ // Iron javelin heads
+				return true;
+			}
+			if ((id == 3084) || (id == 3086) || (id == 3088) || (id == 3090)){ // Steel javelin heads
+				return true;
+			}
+			if ((id == 3092) || (id == 3242) || (id == 3244) || (id == 3246)){ // Mithril javelin heads
+				return true;
+			}
+			if ((id == 3248) || (id == 3905) || (id == 3907) || (id == 3909)){ // Adamant javelin heads
+				return true;
+			}
+			if ((id == 3911) || (id == 3913) || (id == 3915) || (id == 3917)){ // Rune javelin heads
+				return true;
+			}
+			if ((id == 3919) || (id == 3921) || (id == 3923) || (id == 3925)){ // Dragon javelin heads
+				return true;
+			}
+			if ((id == 3963) || (id == 3965) || (id == 3967)){ // Amethyst javelin heads
+				return true;
+			}
+			if ((id == 3250) || (id == 3252) || (id == 3254) || (id == 3256)){ // Lava scale shard
+				return true;
+			}
+
+			return false;
+
+		}
+
+	}
+
+	@Subscribe
+	public void onPostItemComposition(PostItemComposition item_change){
+
+		ItemComposition new_item = item_change.getItemComposition();
+
+		if (is_a_new_item(new_item.getId())){
+			hide_item(new_item);
 		}
 
 	}
