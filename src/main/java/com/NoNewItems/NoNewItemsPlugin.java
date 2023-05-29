@@ -13,6 +13,8 @@ import net.runelite.client.events.ConfigChanged;
 import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
+import java.util.Arrays;
+
 @Slf4j
 @PluginDescriptor(
 		name = "No New Items",
@@ -36,6 +38,8 @@ public class NoNewItemsPlugin extends Plugin
 
 	public short[] all_textures = new short[94]; // Seemingly there are only 94 textures.
 	public short[] new_textures = new short[94];
+
+	public int[] inserted_item_ids;
 
 	public void reset(boolean show_reset_message){
 
@@ -101,6 +105,72 @@ public class NoNewItemsPlugin extends Plugin
 			new_textures[i] = (short) 56; // Red and pink lava. I think this is the best texture match I can get.
 
 		}
+
+		// This is an array of item IDs for new items which have been inserted into the 'old item space' of IDs below 11685,
+		// rather than having been appended to the end of the item ID list. We sort the array and then exploit this fact to
+		// minimise the number of comparisons we make.
+		inserted_item_ids = new int[] {3066, 3068, 3070, 3072, // Bronze javelin heads
+										3074, 3076, 3078, 3082, // Iron javelin heads
+										3084, 3086, 3088, 3090, // Steel javelin heads
+										3092, 3242, 3244, 3246, // Mithril javelin heads
+										3248, 3905, 3907, 3909, // Adamant javelin heads
+										3911, 3921, 3923, 3925, // Dragon javelin heads
+										3963, 3965, 3967, // Amethyst javelin heads
+										3927, 3929, 3931, 3933, // Javelin shaft
+										3250, 3252, 3254, 3256, // Lava scale shard
+										599, 1589, 2420, 2512, // Buchu seed
+										1649, 1650, 1651, // Bullet arrow
+										1652, 1653, 6564, // Glistening tear
+										2425, // Vorkath's head
+										3272, // cave kraken
+										3902, 4000, 4076, 4177, // Amethyst broad bolts
+										3951, 4762, 4767, 4768, // Amethyst bolt tips
+										4763, 4764, 4765, 4766, // Amethyst arrow (p)
+										4769, 4770, 4771, 4772, // Amethyst arrow
+										3955, 3957, 3959, 3961, // Amylase crystal
+										3973, 3975, 3977, 3979, // Grape seed
+										3981, // Wilderness sword
+										3983, // Western banner
+										3985, 3987, 3989, 3991, // Platinum token
+										3993, 3995, 3997, 3999, // Zulrah's scales
+										4028, // Ancient gorilla greegree
+										4036, 4280, 4282, 4296, // Broad bolts
+										4312, 4626, 4706, 5069, // Unfinished broad bolts
+										4449, 4451, 4453, 4455, // Broad arrowheads
+										5093, // Morytania legs
+										5095, // Explorer's ring
+										5349, // Smoke devil
+										6205, 6207, 6210, 6381, // Barbed arrow
+										1668, 1691, 6566, // Dragonstone dragon bolts (e)
+										7938, // Dark essence fragments
+										8465, 8467, 8469, 8471, // Dragon bolts (unf)
+										8473, 8475, 8477, 8479, // Dragon bolts
+										8481, 8483, 8485, 8487, // Dragon bolts (p)
+										8489, 8491, 8493, 8495, // Opal dragon bolts
+										8651, 8653, 8655, 8657, // Jade dragon bolts
+										8659, 8661, 8663, 8665, // Pearl dragon bolts
+										8667, 8669, 8671, 8673, // Topaz dragon bolts
+										8675, 8677, 8679, 8681, // Sapphire dragon bolts
+										8683, 8685, 8687, 8689, // Emerald dragon bolts
+										8691, 8693, 8695, 8697, // Ruby dragon bolts
+										8699, 8701, 8703, 8705, // Diamond dragon bolts
+										8707, 8709, 8711, 8713, // Dragonstone dragon bolts
+										8715, 8717, 8719, 8721, // Onyx dragon bolts
+										8723, 8725, 8727, 8729, // Opal dragon bolts (e)
+										8731, 8733, 8735, 8737, // Jade dragon bolts (e)
+										8739, 8741, 8743, 8745, // Peal dragon bolts (e)
+										8747, 8749, 8751, 8753, // Topaz dragon bolts (e)
+										8755, 8757, 8759, 8761, // Sapphire dragon bolts (e)
+										8763, 8765, 8767, 8769, // Emerald dragon bolts (e)
+										8771, 8773, 8775, 8777, // Ruby dragon bolts (e)
+										1687, 1688, 1689, 1690, // Diamond dragon bolts (e)
+										1669, 1670, 1671, 1672, // Onyx dragon bolts (e)
+										9815, 9816, 10165, 10166, 10601, 10602, 10666, 10669, // Spirit flakes
+										10573, 10575, 10577, 10579, // Noxifer seed
+										10574, 10576, 10578, 10580, // Golpar seed
+										// Ids 9906-9919 correspond to inserted items from the 2013 Halloween event. But the items have all been removed and so we don't actually compare against them.
+		};
+		Arrays.sort(inserted_item_ids);
 
 		reset(true);
 
@@ -203,41 +273,34 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
-			return true;
+			return true; // The default for id > 11685
 
 		} else {
 
 			// If we enter here, we're looking for new items which have been inserted at lower item IDs.
+			// We have stored these IDs in the (sorted) array "inserted_item_ids".
 
-			if ((id == 3066) || (id == 3068) || (id == 3070) || (id == 3072)){ // Bronze javelin heads
-				return true;
-			}
-			if ((id == 3074) || (id == 3076) || (id == 3078) || (id == 3082)){ // Iron javelin heads
-				return true;
-			}
-			if ((id == 3084) || (id == 3086) || (id == 3088) || (id == 3090)){ // Steel javelin heads
-				return true;
-			}
-			if ((id == 3092) || (id == 3242) || (id == 3244) || (id == 3246)){ // Mithril javelin heads
-				return true;
-			}
-			if ((id == 3248) || (id == 3905) || (id == 3907) || (id == 3909)){ // Adamant javelin heads
-				return true;
-			}
-			if ((id == 3911) || (id == 3913) || (id == 3915) || (id == 3917)){ // Rune javelin heads
-				return true;
-			}
-			if ((id == 3919) || (id == 3921) || (id == 3923) || (id == 3925)){ // Dragon javelin heads
-				return true;
-			}
-			if ((id == 3963) || (id == 3965) || (id == 3967)){ // Amethyst javelin heads
-				return true;
-			}
-			if ((id == 3250) || (id == 3252) || (id == 3254) || (id == 3256)){ // Lava scale shard
-				return true;
+			if (id <= inserted_item_ids[inserted_item_ids.length - 1]){ // Exploit fact that inserted_item_ids is in ascending order.
+
+				for (int inserted_id : inserted_item_ids){
+
+					if (id < inserted_id){
+
+						break; // Exploit fact that inserted_item_ids is in ascending order.
+
+					} else {
+
+						if (id == inserted_id){
+							return true;
+						}
+
+					}
+
+				}
+
 			}
 
-			return false;
+			return false; // The default for id <= 11685
 
 		}
 
