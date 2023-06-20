@@ -90,4 +90,13 @@ public interface NoNewItemsConfig extends Config
 	)
 	default boolean hide_reward_caskets() { return true; }
 
+	@ConfigItem(
+			position = 6,
+			keyName = "hide_seed_nests",
+			name = "Hide seed nests",
+			description = "If enabled, the updated bird nests containing seeds (from Wyson or otherwise) will be considered new.",
+			section = update_section
+	)
+	default boolean hide_seed_nests() { return true; }
+
 }

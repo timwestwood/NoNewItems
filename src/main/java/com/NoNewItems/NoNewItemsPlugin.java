@@ -273,6 +273,17 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
+			if (!config.hide_seed_nests()){
+
+				// If we enter here, we're allowing the new seed nests.
+				boolean is_a_new_seed_nest = (id >= 22798) && (id <= 22801);
+
+				if (is_a_new_seed_nest){
+					return false;
+				}
+
+			}
+
 			return true; // The default for id > 11685
 
 		} else {
