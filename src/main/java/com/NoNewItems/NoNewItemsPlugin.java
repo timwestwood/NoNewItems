@@ -295,6 +295,17 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
+			if (!config.hide_land_of_the_goblins()){
+
+				// If we enter here, we're allowing the Land of the Goblins quest.
+				boolean is_from_lotg = (id >= 26567) && (id <= 26593);
+
+				if (is_from_lotg){
+					return false;
+				}
+
+			}
+
 			return true; // The default for id > 11685
 
 		} else {
@@ -332,7 +343,7 @@ public class NoNewItemsPlugin extends Plugin
 	public void onPostItemComposition(PostItemComposition item_change){
 
 		ItemComposition new_item = item_change.getItemComposition();
-
+System.out.println(new_item.getName() + ": " + String.valueOf(new_item.getId()));
 		if (is_a_new_item(new_item.getId())){
 			hide_item(new_item);
 		}

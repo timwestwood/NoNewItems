@@ -108,4 +108,13 @@ public interface NoNewItemsConfig extends Config
 	)
 	default boolean hide_agility_cape() { return true; }
 
+	@ConfigItem(
+			position = 8,
+			keyName = "hide_land_of_the_goblins",
+			name = "Hide Land of the Goblins items",
+			description = "If enabled, items added to the game as part of the Land of the Goblins quest (including the Hopespear's Will miniquest) will be considered new.",
+			section = update_section
+	)
+	default boolean hide_land_of_the_goblins() { return true; }
+
 }
