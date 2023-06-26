@@ -5,6 +5,7 @@ By default, the plugin will consider items from the original God Wars dungeon an
 - the coin pouches from pickpocketing that replaced coins as part of an update to tackle botting/autoclicking;
 - the stackable, tier-specific reward caskets from clue scrolls that replaced the original reward caskets;
 - the bird nests containing seeds (both the standard type and those from Wyson) that replaced the old seed nests when the drop tables were updated;
+- the updated Agility cape and Agility cape (t), which now function as the graceful cape;
 - Old School bonds, which players may rely on for their membership;
 
 but these can be toggled too.
@@ -30,7 +31,6 @@ but these can be toggled too.
 - A new item on the floor.
 
 ![new_item_floor_pile_for_readme](https://user-images.githubusercontent.com/30214370/235109456-cea696bf-4e06-4b6b-9dd4-b00e241bace0.png)
-
 
 - Some game items, such as fishing nets, are drawn using texture files rather than being coloured in. For these items, the usual texture is replaced with red and pink lava to give a similar effect.
 

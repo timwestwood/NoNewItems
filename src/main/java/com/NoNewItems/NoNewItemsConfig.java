@@ -99,4 +99,13 @@ public interface NoNewItemsConfig extends Config
 	)
 	default boolean hide_seed_nests() { return true; }
 
+	@ConfigItem(
+			position = 7,
+			keyName = "hide_agility_cape",
+			name = "Hide Agility cape",
+			description = "If enabled, the updated version of the Agility cape that functions as the graceful cape will be considered new.",
+			section = update_section
+	)
+	default boolean hide_agility_cape() { return true; }
+
 }

@@ -284,6 +284,17 @@ public class NoNewItemsPlugin extends Plugin
 
 			}
 
+			if (!config.hide_agility_cape()){
+
+				// If we enter here, we're allowing the new agility cape(s).
+				boolean is_a_new_agility_cape = (id == 13340) || (id == 13341) || (id == 14234) || (id == 14235);
+
+				if (is_a_new_agility_cape){
+					return false;
+				}
+
+			}
+
 			return true; // The default for id > 11685
 
 		} else {
