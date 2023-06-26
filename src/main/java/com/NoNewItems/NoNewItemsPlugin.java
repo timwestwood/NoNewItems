@@ -343,7 +343,7 @@ public class NoNewItemsPlugin extends Plugin
 	public void onPostItemComposition(PostItemComposition item_change){
 
 		ItemComposition new_item = item_change.getItemComposition();
-System.out.println(new_item.getName() + ": " + String.valueOf(new_item.getId()));
+
 		if (is_a_new_item(new_item.getId())){
 			hide_item(new_item);
 		}
