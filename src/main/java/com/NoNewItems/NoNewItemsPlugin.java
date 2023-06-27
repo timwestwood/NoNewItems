@@ -189,7 +189,10 @@ public class NoNewItemsPlugin extends Plugin
 	public void onConfigChanged(ConfigChanged change) {
 		if (change.getGroup().equals("NoNewItems")){
 
-			boolean changes_player_visual = change.getKey().equals("hide_god_wars") || change.getKey().equals("hide_varrock_armour");
+			boolean changes_player_visual = change.getKey().equals("hide_god_wars")
+											|| change.getKey().equals("hide_varrock_armour")
+											|| change.getKey().equals("hide_agility_cape")
+											|| change.getKey().equals("hide_land_of_the_goblins"); // The goblin mails are wearable.
 
 			reset(changes_player_visual);
 
