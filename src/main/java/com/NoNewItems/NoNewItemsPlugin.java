@@ -228,7 +228,7 @@ public class NoNewItemsPlugin extends Plugin
 			if (!config.hide_god_wars()){
 
 				// If we enter here, then we are allowing items from the God Wars dungeon which appeared in the dungeon's original 2007 release to the main game.
-				boolean valid_god_wars_item = ((id >= 11787) && (id < 11791)) || ((id >= 11793) && (id < 11844)); // These checks exclude the Armadyl crossbow (11785/6) and the Staff of the dead (11791/2).
+				boolean valid_god_wars_item = ((id >= 11787) && (id < 11791)) || ((id >= 11793) && (id < 11847)); // These checks exclude the Armadyl crossbow (11785/6) and the Staff of the dead (11791/2).
 
 				if (valid_god_wars_item){
 					return false;
