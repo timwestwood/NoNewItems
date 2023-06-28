@@ -65,6 +65,15 @@ public interface NoNewItemsConfig extends Config
 
 	@ConfigItem(
 			position = 3,
+			keyName = "hide_land_of_the_goblins",
+			name = "Hide Land of the Goblins items",
+			description = "If enabled, items added to the game as part of the Land of the Goblins quest (including the Hopespear's Will miniquest) will be considered new.",
+			section = update_section
+	)
+	default boolean hide_land_of_the_goblins() { return true; }
+
+	@ConfigItem(
+			position = 4,
 			keyName = "hide_coin_pouches",
 			name = "Hide coin pouches",
 			description = "If enabled, coin pouches from pickpocketing will be considered new.",
@@ -73,7 +82,7 @@ public interface NoNewItemsConfig extends Config
 	default boolean hide_coin_pouches() { return true; }
 
 	@ConfigItem(
-			position = 4,
+			position = 5,
 			keyName = "hide_bonds",
 			name = "Hide bonds",
 			description = "If enabled, Old School bonds will be considered new.",
@@ -82,7 +91,7 @@ public interface NoNewItemsConfig extends Config
 	default boolean hide_bonds() { return true; }
 
 	@ConfigItem(
-			position = 5,
+			position = 6,
 			keyName = "hide_reward_caskets",
 			name = "Hide reward caskets",
 			description = "If enabled, reward caskets from easy, medium and hard clues will be considered new.",
@@ -91,7 +100,7 @@ public interface NoNewItemsConfig extends Config
 	default boolean hide_reward_caskets() { return true; }
 
 	@ConfigItem(
-			position = 6,
+			position = 7,
 			keyName = "hide_seed_nests",
 			name = "Hide seed nests",
 			description = "If enabled, the updated bird nests containing seeds (from Wyson or otherwise) will be considered new.",
@@ -100,7 +109,7 @@ public interface NoNewItemsConfig extends Config
 	default boolean hide_seed_nests() { return true; }
 
 	@ConfigItem(
-			position = 7,
+			position = 8,
 			keyName = "hide_agility_cape",
 			name = "Hide Agility cape",
 			description = "If enabled, the updated version of the Agility cape that functions as the graceful cape will be considered new.",
@@ -109,12 +118,12 @@ public interface NoNewItemsConfig extends Config
 	default boolean hide_agility_cape() { return true; }
 
 	@ConfigItem(
-			position = 8,
-			keyName = "hide_land_of_the_goblins",
-			name = "Hide Land of the Goblins items",
-			description = "If enabled, items added to the game as part of the Land of the Goblins quest (including the Hopespear's Will miniquest) will be considered new.",
+			position = 9,
+			keyName = "hide_crystal_shield_and_bow",
+			name = "Hide crystal shield and bow",
+			description = "If enabled, the updated versions of the crystal shield and bow whose bonuses don't degrade will be considered new.",
 			section = update_section
 	)
-	default boolean hide_land_of_the_goblins() { return true; }
+	default boolean hide_crystal_shield_and_bow() { return true; }
 
 }

@@ -6,6 +6,7 @@ By default, the plugin will consider items from the original God Wars dungeon, t
 - the stackable, tier-specific reward caskets from clue scrolls that replaced the original reward caskets;
 - the bird nests containing seeds (both the standard type and those from Wyson) that replaced the old seed nests when the drop tables were updated;
 - the updated Agility cape and Agility cape (t), which now function as the graceful cape;
+- the new crystal shield and bow, whose bonuses no longer decrease as the items degrade;
 - Old School bonds, which players may rely on for their membership;
 
 but these can be toggled too.

@@ -192,7 +192,8 @@ public class NoNewItemsPlugin extends Plugin
 			boolean changes_player_visual = change.getKey().equals("hide_god_wars")
 											|| change.getKey().equals("hide_varrock_armour")
 											|| change.getKey().equals("hide_agility_cape")
-											|| change.getKey().equals("hide_land_of_the_goblins"); // The goblin mails are wearable.
+											|| change.getKey().equals("hide_land_of_the_goblins") // The goblin mails are wearable.
+											|| change.getKey().equals("hide_crystal_shield_and_bow");
 
 			reset(changes_player_visual);
 
@@ -304,6 +305,18 @@ public class NoNewItemsPlugin extends Plugin
 				boolean is_from_lotg = (id >= 26567) && (id <= 26593);
 
 				if (is_from_lotg){
+					return false;
+				}
+
+			}
+
+			if (!config.hide_crystal_shield_and_bow()){
+
+				// If we enter here, we're allowing the new crystal shield and bow.
+				boolean is_new_crystal_equip = (id == 16890) || (id == 23991) || (id == 23992) || (id == 23993) || (id == 23994) || (id == 24127) || (id == 24128) // shield
+												|| (id == 16888) || (id == 23983)  || (id == 23984)  || (id == 23985)  || (id == 23986)  || (id == 24123)  || (id == 24124) ; // bow
+
+				if (is_new_crystal_equip){
 					return false;
 				}
 
