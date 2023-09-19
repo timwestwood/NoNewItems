@@ -1,7 +1,7 @@
 # No New Items
 No New Items is a RuneLite[^runelite] plugin for players who want to maximise their nostalgia by avoiding items which have been added to Old School RuneScape[^osrs] (OSRS) since its initial release. It does so by changing the visual appearance of new items to be bright red, acting as a visual warning. There is also an option to change the in-game name of new items.
 
-By default, the plugin will consider items from the original God Wars dungeon, the armour reward from the easy Varrock diary and items related to the Land of the Goblins quest as new because they weren't present in the game at the time of the backup used to create OSRS. But as these were actually added to the main game in 2007 and may be considered "old school" by many players, there is a toggle to allow such items. Similarly, the plugin will default to recolouring:
+By default, the plugin will consider items from the original God Wars dungeon, the armour reward from the easy Varrock diary and items related to the quests 'Land of the Goblins' and 'The Path of Glouphrie' as new because they weren't present in the game at the time of the backup used to create OSRS. But as these were actually added to the main game in 2007 and may be considered "old school" by many players, there is a toggle to allow such items. Similarly, the plugin will default to recolouring:
 - the coin pouches from pickpocketing that replaced coins as part of an update to tackle botting/autoclicking;
 - the stackable, tier-specific reward caskets from clue scrolls that replaced the original reward caskets;
 - the bird nests containing seeds (both the standard type and those from Wyson) that replaced the old seed nests when the drop tables were updated;

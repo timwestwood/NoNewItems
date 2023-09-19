@@ -301,7 +301,7 @@ public class NoNewItemsPlugin extends Plugin
 
 			if (!config.hide_land_of_the_goblins()){
 
-				// If we enter here, we're allowing the Land of the Goblins quest.
+				// If we enter here, we're allowing the 'Land of the Goblins' quest.
 				boolean is_from_lotg = (id >= 26567) && (id <= 26593);
 
 				if (is_from_lotg){
@@ -317,6 +317,17 @@ public class NoNewItemsPlugin extends Plugin
 												|| (id == 16888) || (id == 23983)  || (id == 23984)  || (id == 23985)  || (id == 23986)  || (id == 24123)  || (id == 24124) ; // bow
 
 				if (is_new_crystal_equip){
+					return false;
+				}
+
+			}
+
+			if (!config.hide_path_of_glouphrie()){
+
+				// If we enter here, we're allowing the quest 'The Path of Glouphrie'.
+				boolean is_from_pog = (id >= 28573) && (id <= 28590);
+
+				if (is_from_pog){
 					return false;
 				}
 
