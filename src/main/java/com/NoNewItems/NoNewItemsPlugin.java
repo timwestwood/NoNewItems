@@ -14,7 +14,6 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import java.util.Arrays;
-import java.util.List;
 
 @Slf4j
 @PluginDescriptor(
@@ -62,10 +61,11 @@ public class NoNewItemsPlugin extends Plugin
 
 		// This should force through the change on all rendered players, including the user.
 		// However, certain players seem to get stuck on the configuration of the plugin when they were 'discovered'.
-		List<Player> players = client.getPlayers();
-		for (Player player : players){
-			if (player != null){
-				(player.getPlayerComposition()).setHash();
+		if (client.getTopLevelWorldView() != null){
+			for (Player player : client.getTopLevelWorldView().players()){
+				if (player != null){
+					(player.getPlayerComposition()).setHash();
+				}
 			}
 		}
 
