@@ -14,6 +14,7 @@ import net.runelite.client.plugins.Plugin;
 import net.runelite.client.plugins.PluginDescriptor;
 
 import java.util.Arrays;
+import java.util.List;
 
 @Slf4j
 @PluginDescriptor(
@@ -59,18 +60,12 @@ public class NoNewItemsPlugin extends Plugin
 		cache = client.getItemCompositionCache();
 		cache.reset();
 
-		// This will force through appearance changes on the player model.
-		Player me = client.getLocalPlayer();
-		if (me != null){
-			(me.getPlayerComposition()).setHash();
-		}
-
-		// This should force through the change on all other rendered players.
+		// This should force through the change on all rendered players, including the user.
 		// However, certain players seem to get stuck on the configuration of the plugin when they were 'discovered'.
-		Player[] cached_players = client.getCachedPlayers();
-		for (Player other : cached_players){
-			if (other != null){
-				(other.getPlayerComposition()).setHash();
+		List<Player> players = client.getPlayers();
+		for (Player player : players){
+			if (player != null){
+				(player.getPlayerComposition()).setHash();
 			}
 		}
 
