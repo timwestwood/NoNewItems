@@ -50,14 +50,9 @@ public class NoNewItemsPlugin extends Plugin
 		// Resetting these caches will force through the visual change in inventories
 		// (including shops, worn equipment etc.), in the GE and on the floor. Unfortunately it doesn't
 		// change the name shown by the Ground Items plugin.
-		NodeCache cache = client.getItemModelCache();
-		cache.reset();
-
-		cache = client.getItemSpriteCache();
-		cache.reset();
-
-		cache = client.getItemCompositionCache();
-		cache.reset();
+		client.getItemModelCache().reset();
+		client.getItemSpriteCache().reset();
+		client.getItemCompositionCache().reset();
 
 		// This should force through the change on all rendered players, including the user.
 		// However, certain players seem to get stuck on the configuration of the plugin when they were 'discovered'.
